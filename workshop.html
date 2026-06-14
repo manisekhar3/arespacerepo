@@ -236,11 +236,14 @@
 <!-- TopNavBar -->
 <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-container-margin h-16 bg-surface/60 backdrop-blur-md border-b border-secondary/20 shadow-sm shadow-secondary/10">
 <div class="flex items-center gap-8">
-<span class="font-headline-md text-headline-md font-bold text-primary tracking-tighter">AeroForge</span>
+<div class="w-10 h-10 rounded-lg overflow-hidden border border-secondary/30 flex items-center justify-center bg-surface-container-low">
+<img src="logo.png" alt="COSMARA Logo" class="w-full h-full object-cover p-1">
+</div>
+<a href="index.html" class="font-headline-md text-headline-md font-bold text-primary tracking-tighter hover:text-secondary transition-colors">COSMARA</a>
 <nav class="hidden md:flex gap-6">
 <a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="academy.html">Academy</a>
 <a class="font-body-md text-body-md text-primary border-b-2 border-primary pb-1" href="workshop.html">Workshop</a>
-<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="dashboard.html">Blueprints</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="blueprints.html">Blueprints</a>
 <a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="dashboard.html">Dashboard</a>
 </nav>
 </div>
@@ -402,6 +405,9 @@
 <button class="p-2 glass-panel rounded hover:bg-secondary/10 text-secondary transition-all" onclick="toggleView()">
 <span class="material-symbols-outlined">view_in_ar</span>
 </button>
+<button id="view-mode-btn" class="p-2 glass-panel rounded hover:bg-secondary/10 text-secondary transition-all" onclick="toggleViewMode()">
+<span class="material-symbols-outlined">view_2d</span>
+</button>
 </div>
 <!-- Zoom Controls -->
 <div class="absolute top-8 left-1/2 -translate-x-1/2 z-10 flex gap-2 glass-panel p-2 rounded-lg">
@@ -525,6 +531,41 @@
         let minZoom = 0.5;
         let currentVehicle = 'rocket';
         let currentComponentIndex = 0;
+
+        // Get URL parameters
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                type: params.get('type') || 'rocket',
+                name: params.get('name') || 'Voyager-9'
+            };
+        }
+
+        // Initialize workshop based on URL parameters
+        function initializeWorkshop() {
+            const params = getUrlParams();
+            currentVehicle = params.type;
+            
+            // Update page title
+            const pageTitle = document.querySelector('title');
+            if (pageTitle) {
+                pageTitle.textContent = `COSMARA Workshop | ${params.name}`;
+            }
+            
+            // Update vehicle selection
+            selectVehicle(currentVehicle);
+            
+            // Update vehicle button styles
+            document.querySelectorAll('.vehicle-btn').forEach(btn => {
+                if (btn.dataset.vehicle === currentVehicle) {
+                    btn.classList.remove('bg-surface-variant', 'text-on-surface-variant');
+                    btn.classList.add('bg-secondary', 'text-on-secondary');
+                } else {
+                    btn.classList.add('bg-surface-variant', 'text-on-surface-variant');
+                    btn.classList.remove('bg-secondary', 'text-on-secondary');
+                }
+            });
+        }
 
         // Three.js variables
         let scene, camera, renderer, rocket, controls;
@@ -785,6 +826,29 @@
             const rocketContainer = document.getElementById('rocket-container');
             rocketContainer.classList.toggle('perspective-1000');
             showNotification('3D view toggled');
+        }
+
+        // Toggle 2D/3D view mode
+        let is2DMode = false;
+        function toggleViewMode() {
+            is2DMode = !is2DMode;
+            const btn = document.getElementById('view-mode-btn');
+            const icon = btn.querySelector('.material-symbols-outlined');
+            
+            if (is2DMode) {
+                icon.textContent = 'view_in_ar';
+                btn.classList.add('bg-secondary/20');
+                showNotification('Switched to 2D Blueprint View');
+                // Add 2D view styling
+                document.getElementById('rocket-container').classList.remove('perspective-1000');
+                document.getElementById('rocket-container').style.transform = 'scale(1) rotateX(0deg) rotateY(0deg)';
+            } else {
+                icon.textContent = 'view_2d';
+                btn.classList.remove('bg-secondary/20');
+                showNotification('Switched to 3D View');
+                // Restore 3D view
+                document.getElementById('rocket-container').classList.add('perspective-1000');
+            }
         }
 
         // Update assembly display
@@ -1334,5 +1398,11 @@
             localStorage.setItem('tutorialCompleted', 'true');
             showNotification('Tutorial completed! You can always access it via the Assembly Guide button.');
         }
+
+        // Initialize workshop on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeWorkshop();
+            initThreeJS();
+        });
     </script>
 </body></html>
