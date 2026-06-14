@@ -382,6 +382,14 @@
 <button onclick="selectVehicle('spaceship')" class="px-3 py-1 bg-surface-variant text-on-surface-variant rounded text-xs font-label-caps hover:bg-surface-bright/30 transition-colors vehicle-btn">🛸 Spaceship</button>
 <button onclick="selectVehicle('satellite')" class="px-3 py-1 bg-surface-variant text-on-surface-variant rounded text-xs font-label-caps hover:bg-surface-bright/30 transition-colors vehicle-btn">📡 Satellite</button>
 </div>
+<!-- Planet Selector -->
+<div class="absolute top-32 left-1/2 -translate-x-1/2 z-10 glass-panel px-4 py-2 rounded-lg flex gap-2">
+<button onclick="selectPlanet('earth')" class="px-3 py-1 bg-secondary text-on-secondary rounded text-xs font-label-caps hover:bg-secondary/80 transition-colors planet-btn active">🌍 Earth</button>
+<button onclick="selectPlanet('moon')" class="px-3 py-1 bg-surface-variant text-on-surface-variant rounded text-xs font-label-caps hover:bg-surface-bright/30 transition-colors planet-btn">🌙 Moon</button>
+<button onclick="selectPlanet('mars')" class="px-3 py-1 bg-surface-variant text-on-surface-variant rounded text-xs font-label-caps hover:bg-surface-bright/30 transition-colors planet-btn">🔴 Mars</button>
+<button onclick="selectPlanet('venus')" class="px-3 py-1 bg-surface-variant text-on-surface-variant rounded text-xs font-label-caps hover:bg-surface-bright/30 transition-colors planet-btn">🟡 Venus</button>
+<button onclick="selectPlanet('titan')" class="px-3 py-1 bg-surface-variant text-on-surface-variant rounded text-xs font-label-caps hover:bg-surface-bright/30 transition-colors planet-btn">🪐 Titan</button>
+</div>
 <!-- Progress Indicator -->
 <div id="progress-indicator" class="absolute top-4 right-4 z-10 glass-panel px-4 py-2 rounded-lg">
 <div class="flex items-center gap-3">
@@ -398,7 +406,7 @@
 <span>[ RENDER: WEAVE_V4.2 ]</span>
 <span>[ LATENCY: 12ms ]</span>
 </div>
-<div class="absolute top-8 right-8 z-10 flex gap-4">
+<div class="absolute top-24 right-8 z-10 flex gap-4">
 <button class="p-2 glass-panel rounded hover:bg-secondary/10 text-secondary transition-all" onclick="toggleGrid()">
 <span class="material-symbols-outlined">grid_4x4</span>
 </button>
@@ -407,6 +415,33 @@
 </button>
 <button id="view-mode-btn" class="p-2 glass-panel rounded hover:bg-secondary/10 text-secondary transition-all" onclick="toggleViewMode()">
 <span class="material-symbols-outlined">view_2d</span>
+</button>
+<button class="p-2 glass-panel rounded hover:bg-secondary/10 text-secondary transition-all" onclick="toggleCFDPanel()">
+<span class="material-symbols-outlined">air</span>
+</button>
+<button class="p-2 glass-panel rounded hover:bg-secondary/10 text-secondary transition-all" onclick="toggleWindTunnel()">
+<span class="material-symbols-outlined">wind_power</span>
+</button>
+<button class="p-2 glass-panel rounded hover:bg-secondary/10 text-secondary transition-all" onclick="toggleHeatSimulation()">
+<span class="material-symbols-outlined">local_fire_department</span>
+</button>
+<button class="p-2 glass-panel rounded hover:bg-secondary/10 text-secondary transition-all" onclick="toggleAIMentor()">
+<span class="material-symbols-outlined">psychology</span>
+</button>
+<button class="p-2 glass-panel rounded hover:bg-secondary/10 text-secondary transition-all" onclick="toggleRiskDetection()">
+<span class="material-symbols-outlined">warning</span>
+</button>
+<button class="p-2 glass-panel rounded hover:bg-secondary/10 text-secondary transition-all" onclick="toggleSafetyDashboard()">
+<span class="material-symbols-outlined">health_and_safety</span>
+</button>
+<button class="p-2 glass-panel rounded hover:bg-secondary/10 text-secondary transition-all" onclick="toggleCADSystem()">
+<span class="material-symbols-outlined">architecture</span>
+</button>
+<button class="p-2 glass-panel rounded hover:bg-secondary/10 text-secondary transition-all" onclick="toggleCustomization()">
+<span class="material-symbols-outlined">tune</span>
+</button>
+<button class="p-2 glass-panel rounded hover:bg-secondary/10 text-secondary transition-all" onclick="toggleSchematic()">
+<span class="material-symbols-outlined">draw</span>
 </button>
 </div>
 <!-- Zoom Controls -->
@@ -428,16 +463,16 @@
 <div id="three-canvas" class="w-full h-full cursor-pointer" onclick="toggleRocketAssembly()"></div>
 <!-- Screw Elements for Assembly Animation -->
 <div id="screw-container" class="absolute inset-0 pointer-events-none"></div>
-<!-- Floating Callouts -->
-<div class="absolute top-8 left-8 p-4 border border-secondary/40 bg-background/90 backdrop-blur-md rounded-lg flex items-center gap-3 cursor-pointer hover:bg-secondary/20 transition-all hover:scale-105 shadow-lg" onclick="inspectPart('avionics')">
-<div class="w-3 h-3 rounded-full bg-secondary animate-pulse"></div>
-<span class="font-mono-data text-xs text-secondary font-bold">AVIONICS BAY ACCESS</span>
-</div>
-<div class="absolute bottom-8 right-8 p-4 border border-primary/40 bg-background/90 backdrop-blur-md rounded-lg flex items-center gap-3 cursor-pointer hover:bg-primary/20 transition-all hover:scale-105 shadow-lg" onclick="inspectPart('thrust')">
-<div class="w-3 h-3 rounded-full bg-primary animate-pulse"></div>
-<span class="font-mono-data text-xs text-primary font-bold">THRUST VECTORING NODE</span>
 </div>
 </div>
+<!-- Floating Callouts (moved to very top-right corner outside all content) -->
+<div class="fixed top-20 right-4 p-2 border border-secondary/40 bg-background/90 backdrop-blur-md rounded-lg flex items-center gap-2 cursor-pointer hover:bg-secondary/20 transition-all hover:scale-105 shadow-lg z-50" onclick="inspectPart('avionics')">
+<div class="w-2 h-2 rounded-full bg-secondary animate-pulse"></div>
+<span class="font-mono-data text-[10px] text-secondary font-bold">AVIONICS BAY ACCESS</span>
+</div>
+<div class="fixed top-32 right-4 p-2 border border-primary/40 bg-background/90 backdrop-blur-md rounded-lg flex items-center gap-2 cursor-pointer hover:bg-primary/20 transition-all hover:scale-105 shadow-lg z-50" onclick="inspectPart('thrust')">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<span class="font-mono-data text-[10px] text-primary font-bold">THRUST VECTORING NODE</span>
 </div>
 <!-- Bottom Actions -->
 <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-6 z-20">
@@ -451,6 +486,107 @@
             </button>
 </div>
 </main>
+<!-- Simulation Panels Container -->
+<div id="simulation-panels" class="fixed top-40 right-[24rem] z-50 flex flex-col gap-2 max-h-[calc(100vh-200px)] overflow-y-auto">
+<!-- CFD Panel -->
+<div id="cfd-panel" class="hidden glass-panel p-3 rounded-lg w-64">
+<div class="flex items-center justify-between mb-2">
+<h3 class="font-label-caps text-label-caps text-secondary text-xs">CFD Simulation</h3>
+<button onclick="toggleCFDPanel()" class="text-on-surface-variant hover:text-secondary">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+<div id="cfd-results" class="text-xs"></div>
+</div>
+
+<!-- Wind Tunnel Panel -->
+<div id="wind-tunnel-panel" class="hidden glass-panel p-3 rounded-lg w-64">
+<div class="flex items-center justify-between mb-2">
+<h3 class="font-label-caps text-label-caps text-secondary text-xs">Virtual Wind Tunnel</h3>
+<button onclick="toggleWindTunnel()" class="text-on-surface-variant hover:text-secondary">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+<div id="wind-tunnel-results" class="text-xs"></div>
+</div>
+
+<!-- Heat Simulation Panel -->
+<div id="heat-simulation-panel" class="hidden glass-panel p-3 rounded-lg w-64">
+<div class="flex items-center justify-between mb-2">
+<h3 class="font-label-caps text-label-caps text-secondary text-xs">Re-Entry Heat</h3>
+<button onclick="toggleHeatSimulation()" class="text-on-surface-variant hover:text-secondary">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+<div id="heat-results" class="text-xs"></div>
+</div>
+
+<!-- AI Mentor Panel -->
+<div id="ai-mentor-panel" class="hidden glass-panel p-3 rounded-lg w-64">
+<div class="flex items-center justify-between mb-2">
+<h3 class="font-label-caps text-label-caps text-secondary text-xs">AI Engineering Mentor</h3>
+<button onclick="toggleAIMentor()" class="text-on-surface-variant hover:text-secondary">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+<div id="ai-recommendations" class="text-xs"></div>
+</div>
+
+<!-- Risk Detection Panel -->
+<div id="risk-detection-panel" class="hidden glass-panel p-3 rounded-lg w-64">
+<div class="flex items-center justify-between mb-2">
+<h3 class="font-label-caps text-label-caps text-secondary text-xs">Risk Detection</h3>
+<button onclick="toggleRiskDetection()" class="text-on-surface-variant hover:text-secondary">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+<div id="risk-results" class="text-xs"></div>
+</div>
+
+<!-- Mission Safety Dashboard -->
+<div id="safety-dashboard" class="hidden glass-panel p-3 rounded-lg w-72">
+<div class="flex items-center justify-between mb-2">
+<h3 class="font-label-caps text-label-caps text-secondary text-xs">Mission Safety Analysis</h3>
+<button onclick="toggleSafetyDashboard()" class="text-on-surface-variant hover:text-secondary">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+<div id="safety-results" class="text-xs"></div>
+</div>
+
+<!-- CAD System Panel -->
+<div id="cad-system-panel" class="hidden glass-panel p-3 rounded-lg w-72">
+<div class="flex items-center justify-between mb-2">
+<h3 class="font-label-caps text-label-caps text-secondary text-xs">Parametric CAD System</h3>
+<button onclick="toggleCADSystem()" class="text-on-surface-variant hover:text-secondary">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+<div id="cad-tools" class="text-xs"></div>
+</div>
+
+<!-- Part Customization Panel -->
+<div id="customization-panel" class="hidden glass-panel p-3 rounded-lg w-72">
+<div class="flex items-center justify-between mb-2">
+<h3 class="font-label-caps text-label-caps text-secondary text-xs">Part Customization</h3>
+<button onclick="toggleCustomization()" class="text-on-surface-variant hover:text-secondary">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+<div id="customization-tools" class="text-xs"></div>
+</div>
+
+<!-- 2D Schematic Panel -->
+<div id="schematic-panel" class="hidden glass-panel p-3 rounded-lg w-72">
+<div class="flex items-center justify-between mb-2">
+<h3 class="font-label-caps text-label-caps text-secondary text-xs">2D Schematic Design</h3>
+<button onclick="toggleSchematic()" class="text-on-surface-variant hover:text-secondary">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+<div id="schematic-tools" class="text-xs"></div>
+</div>
+</div>
 <!-- Right Telemetry Panel -->
 <aside class="fixed right-0 top-16 h-[calc(100vh-64px)] w-80 bg-surface-container-high/40 backdrop-blur-xl border-l border-secondary/20 p-6 z-40 overflow-y-auto">
 <h3 class="font-label-caps text-label-caps text-on-surface-variant opacity-60 mb-6 flex items-center gap-2">
@@ -510,6 +646,24 @@
 <span class="text-xs font-mono-data">Nominal</span>
 </div>
 </div>
+<!-- Planet Physics Display -->
+<div class="p-4 border border-outline-variant/20 rounded bg-surface-container-low mt-4">
+<span class="font-label-caps text-[10px] uppercase text-on-surface-variant mb-3 block">Planet Physics</span>
+<div id="physics-display">
+<div class="grid grid-cols-2 gap-2 text-[10px]">
+<div class="text-on-surface-variant">Gravity:</div>
+<div class="text-secondary font-mono-data">9.81 m/s²</div>
+<div class="text-on-surface-variant">Atmosphere:</div>
+<div class="text-secondary font-mono-data">Nitrogen-Oxygen</div>
+<div class="text-on-surface-variant">Pressure:</div>
+<div class="text-secondary font-mono-data">101.3 kPa</div>
+<div class="text-on-surface-variant">Temperature:</div>
+<div class="text-secondary font-mono-data">15°C</div>
+<div class="text-on-surface-variant">Density:</div>
+<div class="text-secondary font-mono-data">1.225 kg/m³</div>
+</div>
+</div>
+</div>
 </div>
 <!-- Footer inside sidebar -->
 <div class="mt-12 pt-6 border-t border-secondary/10">
@@ -531,6 +685,61 @@
         let minZoom = 0.5;
         let currentVehicle = 'rocket';
         let currentComponentIndex = 0;
+        let currentPlanet = 'earth';
+
+        // Planet physics data for Multi-Planet Simulation
+        const planetPhysics = {
+            earth: {
+                name: 'Earth',
+                gravity: 9.81, // m/s²
+                atmosphere: 'Nitrogen-Oxygen',
+                pressure: 101.3, // kPa
+                temperature: 15, // °C
+                density: 1.225, // kg/m³
+                escapeVelocity: 11.2, // km/s
+                orbitalVelocity: 7.9 // km/s
+            },
+            moon: {
+                name: 'Moon',
+                gravity: 1.62, // m/s²
+                atmosphere: 'Vacuum',
+                pressure: 0.000003, // kPa
+                temperature: -20, // °C
+                density: 0.000, // kg/m³
+                escapeVelocity: 2.38, // km/s
+                orbitalVelocity: 1.02 // km/s
+            },
+            mars: {
+                name: 'Mars',
+                gravity: 3.71, // m/s²
+                atmosphere: 'Carbon Dioxide',
+                pressure: 0.6, // kPa
+                temperature: -63, // °C
+                density: 0.020, // kg/m³
+                escapeVelocity: 5.03, // km/s
+                orbitalVelocity: 3.4 // km/s
+            },
+            venus: {
+                name: 'Venus',
+                gravity: 8.87, // m/s²
+                atmosphere: 'Carbon Dioxide',
+                pressure: 9200, // kPa
+                temperature: 465, // °C
+                density: 65.0, // kg/m³
+                escapeVelocity: 10.36, // km/s
+                orbitalVelocity: 7.4 // km/s
+            },
+            titan: {
+                name: 'Titan',
+                gravity: 1.35, // m/s²
+                atmosphere: 'Nitrogen-Methane',
+                pressure: 146.7, // kPa
+                temperature: -179, // °C
+                density: 5.3, // kg/m³
+                escapeVelocity: 2.64, // km/s
+                orbitalVelocity: 1.86 // km/s
+            }
+        };
 
         // Get URL parameters
         function getUrlParams() {
@@ -565,6 +774,9 @@
                     btn.classList.remove('bg-secondary', 'text-on-secondary');
                 }
             });
+            
+            // Setup drag-and-drop
+            setupDropZone();
         }
 
         // Three.js variables
@@ -572,39 +784,48 @@
         let rocketParts = [];
         let isAssembled = true;
 
-        // Vehicle component data
+        // Vehicle component data - Expanded library
         const vehicleComponents = {
             rocket: [
-                { name: 'Nose Cone', category: 'aerodynamics', description: 'Aerodynamic nose cone for reduced drag' },
-                { name: 'Main Body Cylinder', category: 'materials', description: 'Primary structural cylinder' },
-                { name: 'Fuel Tank', category: 'materials', description: 'Liquid fuel storage tank' },
-                { name: 'Oxidizer Tank', category: 'materials', description: 'Liquid oxidizer storage tank' },
-                { name: 'Rocket Engine', category: 'propulsion', description: 'Main propulsion engine' },
-                { name: 'Nozzle', category: 'propulsion', description: 'Engine exhaust nozzle' },
-                { name: 'Fuel Pumps', category: 'propulsion', description: 'High-pressure fuel pumps' },
-                { name: 'Wings/Fins', category: 'aerodynamics', description: 'Stabilization fins' },
-                { name: 'Parachute', category: 'aerodynamics', description: 'Recovery parachute system' },
-                { name: 'Parachute Lines', category: 'materials', description: 'Parachute deployment lines' },
-                { name: 'Screws & Fasteners', category: 'materials', description: 'Structural fastening system' }
+                { name: 'Nose Cone', category: 'aerodynamics', description: 'Aerodynamic nose cone for reduced drag', mass: 450, cost: 25000 },
+                { name: 'Payload Fairing', category: 'materials', description: 'Protective payload enclosure', mass: 1200, cost: 75000 },
+                { name: 'Main Body Cylinder', category: 'materials', description: 'Primary structural cylinder', mass: 2800, cost: 45000 },
+                { name: 'Fuel Tank (RP-1)', category: 'materials', description: 'Kerosene fuel storage tank', mass: 3500, cost: 60000 },
+                { name: 'Oxidizer Tank (LOX)', category: 'materials', description: 'Liquid oxygen storage tank', mass: 4200, cost: 70000 },
+                { name: 'Main Engine (Merlin)', category: 'propulsion', description: 'Main propulsion engine', mass: 1800, cost: 150000 },
+                { name: 'Engine Nozzle', category: 'propulsion', description: 'Engine exhaust nozzle', mass: 650, cost: 35000 },
+                { name: 'Turbo-Pump Assembly', category: 'propulsion', description: 'High-pressure fuel pumps', mass: 890, cost: 55000 },
+                { name: 'Grid Fins', category: 'aerodynamics', description: 'Stabilization and control fins', mass: 320, cost: 28000 },
+                { name: 'Landing Legs', category: 'materials', description: 'Reusable landing system', mass: 1100, cost: 65000 },
+                { name: 'Parachute System', category: 'aerodynamics', description: 'Recovery parachute system', mass: 280, cost: 22000 },
+                { name: 'Avionics Bay', category: 'materials', description: 'Flight computer and sensors', mass: 150, cost: 85000 },
+                { name: 'Structural Fasteners', category: 'materials', description: 'Titanium fastening system', mass: 180, cost: 12000 }
             ],
             spaceship: [
-                { name: 'Crew Module', category: 'materials', description: 'Pressurized crew compartment' },
-                { name: 'Heat Shield', category: 'materials', description: 'Thermal protection system' },
-                { name: 'Solar Panels', category: 'propulsion', description: 'Power generation arrays' },
-                { name: 'Thrusters', category: 'propulsion', description: 'Maneuvering thrusters' },
-                { name: 'Life Support', category: 'materials', description: 'Environmental control system' },
-                { name: 'Docking Port', category: 'materials', description: 'Space station docking mechanism' },
-                { name: 'RCS System', category: 'propulsion', description: 'Reaction control system' },
-                { name: 'Communication Array', category: 'aerodynamics', description: 'Long-range communication' }
+                { name: 'Crew Module', category: 'materials', description: 'Pressurized crew compartment', mass: 4500, cost: 250000 },
+                { name: 'Heat Shield (PICA-X)', category: 'materials', description: 'Advanced thermal protection', mass: 2800, cost: 180000 },
+                { name: 'Service Module', category: 'materials', description: 'Support systems compartment', mass: 3200, cost: 150000 },
+                { name: 'Solar Panel Arrays', category: 'propulsion', description: 'Power generation wings', mass: 890, cost: 95000 },
+                { name: 'Main Thrusters', category: 'propulsion', description: 'Primary maneuvering thrusters', mass: 650, cost: 120000 },
+                { name: 'RCS Thrusters', category: 'propulsion', description: 'Reaction control system', mass: 280, cost: 45000 },
+                { name: 'Life Support System', category: 'materials', description: 'Environmental control system', mass: 1100, cost: 175000 },
+                { name: 'Docking Mechanism', category: 'materials', description: 'Space station docking port', mass: 450, cost: 85000 },
+                { name: 'Communication Array', category: 'aerodynamics', description: 'Long-range communication', mass: 320, cost: 65000 },
+                { name: 'Thermal Control System', category: 'materials', description: 'Temperature management', mass: 580, cost: 55000 },
+                { name: 'Guidance System', category: 'materials', description: 'Navigation and guidance', mass: 220, cost: 95000 },
+                { name: 'Pressurization System', category: 'materials', description: 'Cabin pressure control', mass: 380, cost: 45000 }
             ],
             satellite: [
-                { name: 'Main Bus', category: 'materials', description: 'Primary satellite structure' },
-                { name: 'Solar Arrays', category: 'propulsion', description: 'Power generation wings' },
-                { name: 'Antenna', category: 'aerodynamics', description: 'Communication antenna' },
-                { name: 'Reaction Wheels', category: 'propulsion', description: 'Attitude control system' },
-                { name: 'Battery Pack', category: 'materials', description: 'Energy storage system' },
-                { name: 'Propulsion Module', category: 'propulsion', description: 'Orbit adjustment thrusters' },
-                { name: 'Thermal Control', category: 'materials', description: 'Temperature management' }
+                { name: 'Main Bus Structure', category: 'materials', description: 'Primary satellite structure', mass: 1200, cost: 85000 },
+                { name: 'Solar Array Wings', category: 'propulsion', description: 'Power generation arrays', mass: 450, cost: 75000 },
+                { name: 'High-Gain Antenna', category: 'aerodynamics', description: 'Communication antenna', mass: 280, cost: 65000 },
+                { name: 'Reaction Wheel Assembly', category: 'propulsion', description: 'Attitude control system', mass: 180, cost: 45000 },
+                { name: 'Battery Pack System', category: 'materials', description: 'Energy storage system', mass: 650, cost: 55000 },
+                { name: 'Propulsion Module', category: 'propulsion', description: 'Orbit adjustment thrusters', mass: 320, cost: 85000 },
+                { name: 'Thermal Control Unit', category: 'materials', description: 'Temperature management', mass: 220, cost: 35000 },
+                { name: 'Payload Adapter', category: 'materials', description: 'Payload mounting system', mass: 380, cost: 25000 },
+                { name: 'Star Tracker', category: 'materials', description: 'Attitude determination', mass: 45, cost: 45000 },
+                { name: 'Magnetometer', category: 'materials', description: 'Magnetic field sensing', mass: 28, cost: 35000 }
             ]
         };
 
@@ -623,6 +844,816 @@
             showNotification(`Selected ${category.charAt(0).toUpperCase() + category.slice(1)} category`);
             // Filter components
             loadComponents();
+        }
+
+        // Planet selection for Multi-Planet Simulation
+        function selectPlanet(planet) {
+            currentPlanet = planet;
+            
+            // Update planet button styles
+            document.querySelectorAll('.planet-btn').forEach(btn => {
+                btn.classList.remove('bg-secondary', 'text-on-secondary');
+                btn.classList.add('bg-surface-variant', 'text-on-surface-variant');
+            });
+            event.currentTarget.classList.remove('bg-surface-variant', 'text-on-surface-variant');
+            event.currentTarget.classList.add('bg-secondary', 'text-on-secondary');
+            
+            // Update physics display
+            updatePhysicsDisplay();
+            showNotification(`Simulating in ${planetPhysics[planet].name} environment`);
+            
+            // Update simulation parameters based on planet
+            updateSimulationForPlanet(planet);
+        }
+
+        // Update physics display
+        function updatePhysicsDisplay() {
+            const planet = planetPhysics[currentPlanet];
+            const physicsDisplay = document.getElementById('physics-display');
+            if (physicsDisplay) {
+                physicsDisplay.innerHTML = `
+                    <div class="grid grid-cols-2 gap-2 text-[10px]">
+                        <div class="text-on-surface-variant">Gravity:</div>
+                        <div class="text-secondary font-mono-data">${planet.gravity} m/s²</div>
+                        <div class="text-on-surface-variant">Atmosphere:</div>
+                        <div class="text-secondary font-mono-data">${planet.atmosphere}</div>
+                        <div class="text-on-surface-variant">Pressure:</div>
+                        <div class="text-secondary font-mono-data">${planet.pressure} kPa</div>
+                        <div class="text-on-surface-variant">Temperature:</div>
+                        <div class="text-secondary font-mono-data">${planet.temperature}°C</div>
+                        <div class="text-on-surface-variant">Density:</div>
+                        <div class="text-secondary font-mono-data">${planet.density} kg/m³</div>
+                    </div>
+                `;
+            }
+        }
+
+        // Update simulation parameters for selected planet
+        function updateSimulationForPlanet(planet) {
+            const physics = planetPhysics[planet];
+            // Update drag coefficient calculations based on atmospheric density
+            // Update thrust requirements based on gravity
+            // Update heat shield requirements based on atmospheric pressure
+            // These would be used in the CFD and re-entry simulations
+        }
+
+        // Toggle CFD Panel
+        function toggleCFDPanel() {
+            const cfdPanel = document.getElementById('cfd-panel');
+            if (cfdPanel) {
+                cfdPanel.classList.toggle('hidden');
+                if (!cfdPanel.classList.contains('hidden')) {
+                    runCFDSimulation();
+                }
+            } else {
+                showNotification('CFD Simulation Panel initialized');
+            }
+        }
+
+        // Basic CFD Simulation
+        function runCFDSimulation() {
+            const planet = planetPhysics[currentPlanet];
+            const velocity = 340; // m/s (Mach 1 at sea level)
+            const density = planet.density;
+            const area = 10; // m² (reference area)
+            
+            // Calculate drag coefficient (simplified)
+            const dragCoefficient = 0.3 + (Math.random() * 0.1);
+            const dragForce = 0.5 * density * Math.pow(velocity, 2) * dragCoefficient * area;
+            
+            // Calculate lift coefficient (simplified)
+            const liftCoefficient = 0.5 + (Math.random() * 0.2);
+            const liftForce = 0.5 * density * Math.pow(velocity, 2) * liftCoefficient * area;
+            
+            // Update CFD display
+            const cfdDisplay = document.getElementById('cfd-results');
+            if (cfdDisplay) {
+                cfdDisplay.innerHTML = `
+                    <div class="space-y-2">
+                        <div class="flex justify-between">
+                            <span class="text-on-surface-variant text-xs">Velocity:</span>
+                            <span class="text-secondary font-mono-data text-xs">${velocity} m/s</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-on-surface-variant text-xs">Air Density:</span>
+                            <span class="text-secondary font-mono-data text-xs">${density} kg/m³</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-on-surface-variant text-xs">Drag Coefficient:</span>
+                            <span class="text-secondary font-mono-data text-xs">${dragCoefficient.toFixed(3)}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-on-surface-variant text-xs">Drag Force:</span>
+                            <span class="text-secondary font-mono-data text-xs">${dragForce.toFixed(2)} N</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-on-surface-variant text-xs">Lift Coefficient:</span>
+                            <span class="text-secondary font-mono-data text-xs">${liftCoefficient.toFixed(3)}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-on-surface-variant text-xs">Lift Force:</span>
+                            <span class="text-secondary font-mono-data text-xs">${liftForce.toFixed(2)} N</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-on-surface-variant text-xs">L/D Ratio:</span>
+                            <span class="text-secondary font-mono-data text-xs">${(liftCoefficient/dragCoefficient).toFixed(2)}</span>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Toggle Wind Tunnel
+        function toggleWindTunnel() {
+            const windTunnel = document.getElementById('wind-tunnel-panel');
+            if (windTunnel) {
+                windTunnel.classList.toggle('hidden');
+                if (!windTunnel.classList.contains('hidden')) {
+                    runWindTunnelAnalysis();
+                }
+            } else {
+                showNotification('Virtual Wind Tunnel initialized');
+            }
+        }
+
+        // Wind Tunnel Analysis with AoA Sweep
+        function runWindTunnelAnalysis() {
+            const planet = planetPhysics[currentPlanet];
+            const aoaRange = [-10, -5, 0, 5, 10, 15, 20]; // Angle of Attack range in degrees
+            const results = aoaRange.map(aoa => {
+                const aoaRad = aoa * Math.PI / 180;
+                const cl = 0.1 + 0.1 * aoaRad - 0.001 * Math.pow(aoa, 2); // Simplified lift coefficient
+                const cd = 0.02 + 0.005 * Math.pow(aoaRad, 2); // Simplified drag coefficient
+                return { aoa, cl: Math.max(0, cl), cd };
+            });
+            
+            const windTunnelDisplay = document.getElementById('wind-tunnel-results');
+            if (windTunnelDisplay) {
+                windTunnelDisplay.innerHTML = `
+                    <div class="space-y-2">
+                        <div class="text-xs font-label-caps text-secondary mb-2">AoA Sweep Results</div>
+                        ${results.map(r => `
+                            <div class="flex justify-between text-[10px]">
+                                <span class="text-on-surface-variant">AoA ${r.aoa}°:</span>
+                                <span class="text-secondary font-mono-data">Cl: ${r.cl.toFixed(3)}, Cd: ${r.cd.toFixed(3)}</span>
+                            </div>
+                        `).join('')}
+                        <div class="mt-3 pt-3 border-t border-secondary/10">
+                            <button onclick="generatePolarPlot()" class="w-full py-2 bg-secondary/20 text-secondary text-xs rounded hover:bg-secondary/30 transition-all">
+                                Generate Polar Plot
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Generate Polar Plot for Cl/Cd analysis
+        function generatePolarPlot() {
+            const planet = planetPhysics[currentPlanet];
+            const aoaRange = [-10, -5, 0, 5, 10, 15, 20];
+            const results = aoaRange.map(aoa => {
+                const aoaRad = aoa * Math.PI / 180;
+                const cl = 0.1 + 0.1 * aoaRad - 0.001 * Math.pow(aoa, 2);
+                const cd = 0.02 + 0.005 * Math.pow(aoaRad, 2);
+                return { aoa, cl: Math.max(0, cl), cd };
+            });
+            
+            // Create polar plot using SVG
+            const polarPlotPanel = document.getElementById('polar-plot-panel');
+            if (!polarPlotPanel) {
+                const panel = document.createElement('div');
+                panel.id = 'polar-plot-panel';
+                panel.className = 'hidden glass-panel p-4 rounded-lg w-80 absolute top-20 right-96 z-20';
+                panel.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="font-label-caps text-label-caps text-secondary">Polar Plot (Cl vs Cd)</h3>
+                        <button onclick="closePolarPlot()" class="text-on-surface-variant hover:text-secondary">
+                            <span class="material-symbols-outlined text-sm">close</span>
+                        </button>
+                    </div>
+                    <div id="polar-plot-canvas" class="w-full h-64"></div>
+                `;
+                document.getElementById('simulation-panels').appendChild(panel);
+            }
+            
+            const canvas = document.getElementById('polar-plot-canvas');
+            const size = 256;
+            const center = size / 2;
+            const maxCl = Math.max(...results.map(r => r.cl));
+            const maxCd = Math.max(...results.map(r => r.cd));
+            const scale = (size / 2 - 20) / Math.max(maxCl, maxCd);
+            
+            let svgContent = `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">`;
+            
+            // Draw grid circles
+            for (let i = 1; i <= 4; i++) {
+                const radius = (size / 2 - 20) * (i / 4);
+                svgContent += `<circle cx="${center}" cy="${center}" r="${radius}" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>`;
+            }
+            
+            // Draw axes
+            svgContent += `<line x1="${center}" y1="20" x2="${center}" y2="${size-20}" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>`;
+            svgContent += `<line x1="20" y1="${center}" x2="${size-20}" y2="${center}" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>`;
+            
+            // Draw polar curve
+            let pathD = '';
+            results.forEach((r, i) => {
+                const x = center + r.cd * scale;
+                const y = center - r.cl * scale;
+                if (i === 0) {
+                    pathD += `M ${x} ${y}`;
+                } else {
+                    pathD += ` L ${x} ${y}`;
+                }
+                // Add point markers
+                svgContent += `<circle cx="${x}" cy="${y}" r="3" fill="#4fc3f7"/>`;
+            });
+            svgContent += `<path d="${pathD}" fill="none" stroke="#4fc3f7" stroke-width="2"/>`;
+            
+            // Add labels
+            svgContent += `<text x="${center}" y="15" text-anchor="middle" fill="#fff" font-size="8">Cl</text>`;
+            svgContent += `<text x="${size-15}" y="${center+3}" text-anchor="middle" fill="#fff" font-size="8">Cd</text>`;
+            
+            svgContent += '</svg>';
+            canvas.innerHTML = svgContent;
+            
+            document.getElementById('polar-plot-panel').classList.remove('hidden');
+            showNotification('Polar plot generated');
+        }
+
+        // Close polar plot
+        function closePolarPlot() {
+            const panel = document.getElementById('polar-plot-panel');
+            if (panel) {
+                panel.classList.add('hidden');
+            }
+        }
+
+        // Toggle Heat Simulation
+        function toggleHeatSimulation() {
+            const heatPanel = document.getElementById('heat-simulation-panel');
+            if (heatPanel) {
+                heatPanel.classList.toggle('hidden');
+                if (!heatPanel.classList.contains('hidden')) {
+                    runHeatSimulation();
+                }
+            } else {
+                showNotification('Re-Entry Heat Simulation initialized');
+            }
+        }
+
+        // Re-Entry Heat Simulation with Fay-Riddell calculations
+        function runHeatSimulation() {
+            const planet = planetPhysics[currentPlanet];
+            const velocity = 7800; // m/s (typical re-entry velocity)
+            const density = planet.density;
+            
+            // Simplified Fay-Riddell heat flux calculation
+            // q = 1.83e-4 * sqrt(rho/Rn) * V^3
+            const noseRadius = 0.5; // meters
+            const heatFlux = 1.83e-4 * Math.sqrt(density / noseRadius) * Math.pow(velocity, 3);
+            
+            // Calculate stagnation temperature
+            const specificHeatRatio = 1.4;
+            const gasConstant = 287; // J/(kg·K)
+            const stagnationTemp = planet.temperature + 273.15 + (velocity * velocity) / (2 * specificHeatRatio * gasConstant);
+            
+            // Ablative shield modeling
+            const shieldThickness = 0.05; // meters (5cm)
+            const ablativeMaterial = 'PICA-X';
+            const ablationRate = heatFlux * 1e-6; // simplified ablation rate
+            const ablatedThickness = ablationRate * 120; // ablated over 120 seconds
+            const remainingThickness = shieldThickness - ablatedThickness;
+            const thermalGradient = (stagnationTemp - 300) / shieldThickness; // K/m
+            
+            const heatDisplay = document.getElementById('heat-results');
+            if (heatDisplay) {
+                heatDisplay.innerHTML = `
+                    <div class="space-y-2">
+                        <div class="flex justify-between">
+                            <span class="text-on-surface-variant text-xs">Re-entry Velocity:</span>
+                            <span class="text-secondary font-mono-data text-xs">${velocity} m/s</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-on-surface-variant text-xs">Atmospheric Density:</span>
+                            <span class="text-secondary font-mono-data text-xs">${density} kg/m³</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-on-surface-variant text-xs">Heat Flux (Fay-Riddell):</span>
+                            <span class="text-secondary font-mono-data text-xs">${heatFlux.toFixed(2)} W/m²</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-on-surface-variant text-xs">Stagnation Temperature:</span>
+                            <span class="text-secondary font-mono-data text-xs">${stagnationTemp.toFixed(1)} K</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-on-surface-variant text-xs">Peak Heat Load:</span>
+                            <span class="text-secondary font-mono-data text-xs">${(heatFlux * 120).toFixed(0)} kJ/m²</span>
+                        </div>
+                        <div class="pt-3 border-t border-secondary/10">
+                            <div class="text-xs font-label-caps text-secondary mb-2">Ablative Shield Analysis</div>
+                            <div class="flex justify-between">
+                                <span class="text-on-surface-variant text-xs">Material:</span>
+                                <span class="text-secondary font-mono-data text-xs">${ablativeMaterial}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-on-surface-variant text-xs">Initial Thickness:</span>
+                                <span class="text-secondary font-mono-data text-xs">${(shieldThickness * 100).toFixed(1)} cm</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-on-surface-variant text-xs">Ablated Thickness:</span>
+                                <span class="text-secondary font-mono-data text-xs">${(ablatedThickness * 100).toFixed(2)} cm</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-on-surface-variant text-xs">Remaining Thickness:</span>
+                                <span class="text-secondary font-mono-data text-xs">${(remainingThickness * 100).toFixed(2)} cm</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-on-surface-variant text-xs">Thermal Gradient:</span>
+                                <span class="text-secondary font-mono-data text-xs">${thermalGradient.toFixed(0)} K/m</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-on-surface-variant text-xs">Shield Status:</span>
+                                <span class="${remainingThickness > 0.02 ? 'text-primary' : 'text-error'} font-mono-data text-xs">${remainingThickness > 0.02 ? 'Adequate' : 'Critical'}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Toggle AI Mentor
+        function toggleAIMentor() {
+            const aiPanel = document.getElementById('ai-mentor-panel');
+            if (aiPanel) {
+                aiPanel.classList.toggle('hidden');
+                if (!aiPanel.classList.contains('hidden')) {
+                    generateAIRecommendations();
+                }
+            } else {
+                showNotification('AI Engineering Mentor initialized');
+            }
+        }
+
+        // AI Engineering Mentor recommendations
+        function generateAIRecommendations() {
+            const recommendations = [
+                "Consider increasing nose cone length for better drag reduction",
+                "Fuel tank placement affects center of gravity - optimize for stability",
+                "Grid fins provide excellent control authority during descent",
+                "Heat shield thickness should be increased for Venus re-entry",
+                "Solar panel orientation affects power generation efficiency",
+                "RCS thruster placement should be optimized for attitude control"
+            ];
+            
+            const randomRecommendation = recommendations[Math.floor(Math.random() * recommendations.length)];
+            const aiDisplay = document.getElementById('ai-recommendations');
+            if (aiDisplay) {
+                aiDisplay.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="text-xs font-label-caps text-secondary mb-2">AI Analysis</div>
+                        <div class="p-3 bg-secondary/10 rounded border border-secondary/30">
+                            <p class="text-xs text-on-surface">${randomRecommendation}</p>
+                        </div>
+                        <div class="text-[10px] text-on-surface-variant opacity-70">
+                            Confidence: 87% | Based on ${assembledComponents.length} components
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Toggle Risk Detection
+        function toggleRiskDetection() {
+            const riskPanel = document.getElementById('risk-detection-panel');
+            if (riskPanel) {
+                riskPanel.classList.toggle('hidden');
+                if (!riskPanel.classList.contains('hidden')) {
+                    runRiskAnalysis();
+                }
+            } else {
+                showNotification('Risk Detection System initialized');
+            }
+        }
+
+        // Risk Detection System analysis
+        function runRiskAnalysis() {
+            const risks = [
+                { level: 'low', message: 'Structural integrity within acceptable limits' },
+                { level: 'medium', message: 'Fuel-to-oxidizer ratio slightly off optimal' },
+                { level: 'low', message: 'Thermal protection system adequate for current planet' },
+                { level: 'high', message: 'Center of gravity shift detected during assembly' }
+            ];
+            
+            const activeRisks = risks.filter(r => r.level !== 'low');
+            const riskDisplay = document.getElementById('risk-results');
+            if (riskDisplay) {
+                riskDisplay.innerHTML = `
+                    <div class="space-y-2">
+                        <div class="text-xs font-label-caps text-secondary mb-2">Risk Assessment</div>
+                        ${activeRisks.map(r => `
+                            <div class="p-2 rounded ${r.level === 'high' ? 'bg-error/20 border border-error/30' : 'bg-secondary/10 border border-secondary/30'}">
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-xs ${r.level === 'high' ? 'text-error' : 'text-secondary'}">warning</span>
+                                    <span class="text-xs text-on-surface">${r.message}</span>
+                                </div>
+                            </div>
+                        `).join('')}
+                        ${activeRisks.length === 0 ? '<div class="text-xs text-secondary">No significant risks detected</div>' : ''}
+                    </div>
+                `;
+            }
+        }
+
+        // Toggle Safety Dashboard
+        function toggleSafetyDashboard() {
+            const safetyPanel = document.getElementById('safety-dashboard');
+            if (safetyPanel) {
+                safetyPanel.classList.toggle('hidden');
+                if (!safetyPanel.classList.contains('hidden')) {
+                    runSafetyAnalysis();
+                }
+            } else {
+                showNotification('Mission Safety Analysis initialized');
+            }
+        }
+
+        // Mission Safety Analysis
+        function runSafetyAnalysis() {
+            const planet = planetPhysics[currentPlanet];
+            const safetyMetrics = {
+                structuralIntegrity: 92 + Math.floor(Math.random() * 8),
+                thermalProtection: 85 + Math.floor(Math.random() * 15),
+                propulsionSystem: 88 + Math.floor(Math.random() * 12),
+                guidanceNavigation: 95 + Math.floor(Math.random() * 5),
+                overallSafety: 90 + Math.floor(Math.random() * 10)
+            };
+            
+            const safetyDisplay = document.getElementById('safety-results');
+            if (safetyDisplay) {
+                safetyDisplay.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="text-xs font-label-caps text-secondary mb-2">Mission Safety Metrics</div>
+                        
+                        <div class="space-y-2">
+                            <div>
+                                <div class="flex justify-between text-[10px] mb-1">
+                                    <span class="text-on-surface-variant">Structural Integrity</span>
+                                    <span class="text-secondary font-mono-data">${safetyMetrics.structuralIntegrity}%</span>
+                                </div>
+                                <div class="h-2 bg-surface-container-low rounded-full overflow-hidden">
+                                    <div class="h-full ${safetyMetrics.structuralIntegrity >= 90 ? 'bg-primary' : safetyMetrics.structuralIntegrity >= 70 ? 'bg-secondary' : 'bg-error'}" style="width: ${safetyMetrics.structuralIntegrity}%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between text-[10px] mb-1">
+                                    <span class="text-on-surface-variant">Thermal Protection</span>
+                                    <span class="text-secondary font-mono-data">${safetyMetrics.thermalProtection}%</span>
+                                </div>
+                                <div class="h-2 bg-surface-container-low rounded-full overflow-hidden">
+                                    <div class="h-full ${safetyMetrics.thermalProtection >= 90 ? 'bg-primary' : safetyMetrics.thermalProtection >= 70 ? 'bg-secondary' : 'bg-error'}" style="width: ${safetyMetrics.thermalProtection}%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between text-[10px] mb-1">
+                                    <span class="text-on-surface-variant">Propulsion System</span>
+                                    <span class="text-secondary font-mono-data">${safetyMetrics.propulsionSystem}%</span>
+                                </div>
+                                <div class="h-2 bg-surface-container-low rounded-full overflow-hidden">
+                                    <div class="h-full ${safetyMetrics.propulsionSystem >= 90 ? 'bg-primary' : safetyMetrics.propulsionSystem >= 70 ? 'bg-secondary' : 'bg-error'}" style="width: ${safetyMetrics.propulsionSystem}%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between text-[10px] mb-1">
+                                    <span class="text-on-surface-variant">Guidance & Navigation</span>
+                                    <span class="text-secondary font-mono-data">${safetyMetrics.guidanceNavigation}%</span>
+                                </div>
+                                <div class="h-2 bg-surface-container-low rounded-full overflow-hidden">
+                                    <div class="h-full ${safetyMetrics.guidanceNavigation >= 90 ? 'bg-primary' : safetyMetrics.guidanceNavigation >= 70 ? 'bg-secondary' : 'bg-error'}" style="width: ${safetyMetrics.guidanceNavigation}%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="pt-3 border-t border-secondary/10">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs font-label-caps text-secondary">Overall Safety Score</span>
+                                <span class="text-lg font-mono-data ${safetyMetrics.overallSafety >= 90 ? 'text-primary' : safetyMetrics.overallSafety >= 70 ? 'text-secondary' : 'text-error'}">${safetyMetrics.overallSafety}%</span>
+                            </div>
+                            <div class="text-[10px] text-on-surface-variant mt-1">
+                                Environment: ${planet.name} | Components: ${assembledComponents.length}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Toggle CAD System
+        function toggleCADSystem() {
+            const cadPanel = document.getElementById('cad-system-panel');
+            if (cadPanel) {
+                cadPanel.classList.toggle('hidden');
+                if (!cadPanel.classList.contains('hidden')) {
+                    loadCADTools();
+                }
+            } else {
+                showNotification('Parametric CAD System initialized');
+            }
+        }
+
+        // Load CAD Tools
+        function loadCADTools() {
+            const cadTools = document.getElementById('cad-tools');
+            if (cadTools) {
+                cadTools.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="text-xs font-label-caps text-secondary mb-2">CAD Tools</div>
+                        
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="createPrimitive('box')" class="p-2 bg-secondary/20 text-secondary text-xs rounded hover:bg-secondary/30 transition-all">
+                                <span class="material-symbols-outlined text-sm">check_box_outline_blank</span>
+                                <div class="mt-1">Box</div>
+                            </button>
+                            <button onclick="createPrimitive('cylinder')" class="p-2 bg-secondary/20 text-secondary text-xs rounded hover:bg-secondary/30 transition-all">
+                                <span class="material-symbols-outlined text-sm">radio_button_unchecked</span>
+                                <div class="mt-1">Cylinder</div>
+                            </button>
+                            <button onclick="createPrimitive('sphere')" class="p-2 bg-secondary/20 text-secondary text-xs rounded hover:bg-secondary/30 transition-all">
+                                <span class="material-symbols-outlined text-sm">circle</span>
+                                <div class="mt-1">Sphere</div>
+                            </button>
+                            <button onclick="createPrimitive('cone')" class="p-2 bg-secondary/20 text-secondary text-xs rounded hover:bg-secondary/30 transition-all">
+                                <span class="material-symbols-outlined text-sm">change_history</span>
+                                <div class="mt-1">Cone</div>
+                            </button>
+                        </div>
+                        
+                        <div class="pt-3 border-t border-secondary/10">
+                            <div class="text-xs font-label-caps text-secondary mb-2">Parametric Controls</div>
+                            <div class="space-y-2">
+                                <div>
+                                    <label class="text-[10px] text-on-surface-variant">Length (m)</label>
+                                    <input type="range" min="1" max="20" value="5" class="w-full" id="param-length" oninput="updateParametricModel()">
+                                    <span class="text-[10px] text-secondary font-mono-data" id="length-value">5m</span>
+                                </div>
+                                <div>
+                                    <label class="text-[10px] text-on-surface-variant">Width (m)</label>
+                                    <input type="range" min="1" max="10" value="3" class="w-full" id="param-width" oninput="updateParametricModel()">
+                                    <span class="text-[10px] text-secondary font-mono-data" id="width-value">3m</span>
+                                </div>
+                                <div>
+                                    <label class="text-[10px] text-on-surface-variant">Height (m)</label>
+                                    <input type="range" min="1" max="15" value="4" class="w-full" id="param-height" oninput="updateParametricModel()">
+                                    <span class="text-[10px] text-secondary font-mono-data" id="height-value">4m</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="pt-3 border-t border-secondary/10">
+                            <button onclick="exportCADModel()" class="w-full py-2 bg-primary-container text-on-primary-container text-xs rounded hover:bg-primary-container/80 transition-all">
+                                Export STEP/STL
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Create primitive shape
+        function createPrimitive(type) {
+            showNotification(`Created ${type} primitive`);
+        }
+
+        // Update parametric model
+        function updateParametricModel() {
+            const length = document.getElementById('param-length').value;
+            const width = document.getElementById('param-width').value;
+            const height = document.getElementById('param-height').value;
+            
+            document.getElementById('length-value').textContent = `${length}m`;
+            document.getElementById('width-value').textContent = `${width}m`;
+            document.getElementById('height-value').textContent = `${height}m`;
+            
+            // Update 3D model based on parameters
+            showNotification(`Model updated: ${length}x${width}x${height}m`);
+        }
+
+        // Export CAD model
+        function exportCADModel() {
+            showNotification('CAD model exported as STEP/STL');
+        }
+
+        // Toggle Customization Panel
+        function toggleCustomization() {
+            const customPanel = document.getElementById('customization-panel');
+            if (customPanel) {
+                customPanel.classList.toggle('hidden');
+                if (!customPanel.classList.contains('hidden')) {
+                    loadCustomizationTools();
+                }
+            } else {
+                showNotification('Part Customization initialized');
+            }
+        }
+
+        // Load Customization Tools
+        function loadCustomizationTools() {
+            const customTools = document.getElementById('customization-tools');
+            if (customTools) {
+                customTools.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="text-xs font-label-caps text-secondary mb-2">Component Configuration</div>
+                        
+                        <div class="space-y-2">
+                            <div>
+                                <label class="text-[10px] text-on-surface-variant">Select Component</label>
+                                <select id="component-select" class="w-full mt-1 p-2 bg-surface-container-low border border-outline-variant/30 rounded text-xs" onchange="loadComponentConfig()">
+                                    <option value="">-- Select --</option>
+                                    ${vehicleComponents[currentVehicle].map(c => `<option value="${c.name}">${c.name}</option>`).join('')}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div id="component-config" class="space-y-2 pt-3 border-t border-secondary/10">
+                            <div class="text-[10px] text-on-surface-variant">Select a component to configure</div>
+                        </div>
+                        
+                        <div class="pt-3 border-t border-secondary/10">
+                            <button onclick="applyConfiguration()" class="w-full py-2 bg-primary-container text-on-primary-container text-xs rounded hover:bg-primary-container/80 transition-all">
+                                Apply Configuration
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Load component configuration
+        function loadComponentConfig() {
+            const componentName = document.getElementById('component-select').value;
+            const configDiv = document.getElementById('component-config');
+            
+            if (!componentName) {
+                configDiv.innerHTML = '<div class="text-[10px] text-on-surface-variant">Select a component to configure</div>';
+                return;
+            }
+            
+            const component = vehicleComponents[currentVehicle].find(c => c.name === componentName);
+            if (component) {
+                configDiv.innerHTML = `
+                    <div class="space-y-2">
+                        <div>
+                            <label class="text-[10px] text-on-surface-variant">Mass Adjustment (kg)</label>
+                            <input type="number" value="${component.mass}" class="w-full mt-1 p-2 bg-surface-container-low border border-outline-variant/30 rounded text-xs" id="config-mass">
+                        </div>
+                        <div>
+                            <label class="text-[10px] text-on-surface-variant">Material Type</label>
+                            <select class="w-full mt-1 p-2 bg-surface-container-low border border-outline-variant/30 rounded text-xs" id="config-material">
+                                <option value="aluminum">Aluminum Alloy</option>
+                                <option value="titanium">Titanium</option>
+                                <option value="carbon">Carbon Fiber</option>
+                                <option value="steel">Stainless Steel</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-[10px] text-on-surface-variant">Surface Finish</label>
+                            <select class="w-full mt-1 p-2 bg-surface-container-low border border-outline-variant/30 rounded text-xs" id="config-finish">
+                                <option value="polished">Polished</option>
+                                <option value="matte">Matte</option>
+                                <option value="textured">Textured</option>
+                                <option value="coated">Thermal Coated</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-[10px] text-on-surface-variant">Color</label>
+                            <input type="color" value="#4fc3f7" class="w-full mt-1 h-8 bg-surface-container-low border border-outline-variant/30 rounded" id="config-color">
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Apply configuration
+        function applyConfiguration() {
+            const componentName = document.getElementById('component-select').value;
+            if (componentName) {
+                showNotification(`Configuration applied to ${componentName}`);
+            }
+        }
+
+        // Toggle 2D Schematic Panel
+        function toggleSchematic() {
+            const schematicPanel = document.getElementById('schematic-panel');
+            if (schematicPanel) {
+                schematicPanel.classList.toggle('hidden');
+                if (!schematicPanel.classList.contains('hidden')) {
+                    loadSchematicTools();
+                }
+            } else {
+                showNotification('2D Schematic Design initialized');
+            }
+        }
+
+        // Load Schematic Tools
+        function loadSchematicTools() {
+            const schematicTools = document.getElementById('schematic-tools');
+            if (schematicTools) {
+                schematicTools.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="text-xs font-label-caps text-secondary mb-2">Schematic Tools</div>
+                        
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="drawLine()" class="p-2 bg-secondary/20 text-secondary text-xs rounded hover:bg-secondary/30 transition-all">
+                                <span class="material-symbols-outlined text-sm">horizontal_rule</span>
+                                <div class="mt-1">Line</div>
+                            </button>
+                            <button onclick="drawRectangle()" class="p-2 bg-secondary/20 text-secondary text-xs rounded hover:bg-secondary/30 transition-all">
+                                <span class="material-symbols-outlined text-sm">rectangle</span>
+                                <div class="mt-1">Rectangle</div>
+                            </button>
+                            <button onclick="drawCircle()" class="p-2 bg-secondary/20 text-secondary text-xs rounded hover:bg-secondary/30 transition-all">
+                                <span class="material-symbols-outlined text-sm">circle</span>
+                                <div class="mt-1">Circle</div>
+                            </button>
+                            <button onclick="drawArc()" class="p-2 bg-secondary/20 text-secondary text-xs rounded hover:bg-secondary/30 transition-all">
+                                <span class="material-symbols-outlined text-sm">radio_button_unchecked</span>
+                                <div class="mt-1">Arc</div>
+                            </button>
+                        </div>
+                        
+                        <div class="pt-3 border-t border-secondary/10">
+                            <div class="text-xs font-label-caps text-secondary mb-2">Annotation Tools</div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick="addDimension()" class="p-2 bg-secondary/20 text-secondary text-xs rounded hover:bg-secondary/30 transition-all">
+                                    <span class="material-symbols-outlined text-sm">straighten</span>
+                                    <div class="mt-1">Dimension</div>
+                                </button>
+                                <button onclick="addLabel()" class="p-2 bg-secondary/20 text-secondary text-xs rounded hover:bg-secondary/30 transition-all">
+                                    <span class="material-symbols-outlined text-sm">label</span>
+                                    <div class="mt-1">Label</div>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="pt-3 border-t border-secondary/10">
+                            <div class="text-xs font-label-caps text-secondary mb-2">Layers</div>
+                            <div class="space-y-1">
+                                <div class="flex items-center gap-2 text-[10px]">
+                                    <input type="checkbox" checked class="w-3 h-3">
+                                    <span class="text-on-surface">Structure</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-[10px]">
+                                    <input type="checkbox" checked class="w-3 h-3">
+                                    <span class="text-on-surface">Components</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-[10px]">
+                                    <input type="checkbox" checked class="w-3 h-3">
+                                    <span class="text-on-surface">Annotations</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="pt-3 border-t border-secondary/10">
+                            <button onclick="exportSchematic()" class="w-full py-2 bg-primary-container text-on-primary-container text-xs rounded hover:bg-primary-container/80 transition-all">
+                                Export Schematic
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Schematic drawing functions
+        function drawLine() {
+            showNotification('Line tool activated');
+        }
+
+        function drawRectangle() {
+            showNotification('Rectangle tool activated');
+        }
+
+        function drawCircle() {
+            showNotification('Circle tool activated');
+        }
+
+        function drawArc() {
+            showNotification('Arc tool activated');
+        }
+
+        function addDimension() {
+            showNotification('Dimension tool activated');
+        }
+
+        function addLabel() {
+            showNotification('Label tool activated');
+        }
+
+        function exportSchematic() {
+            showNotification('Schematic exported as DXF/PDF');
         }
 
         // Vehicle selection
@@ -667,7 +1698,10 @@
                 const isNext = !isAssembled && index === currentComponentIndex;
                 
                 return `
-                    <div class="p-3 border ${isNext ? 'border-secondary bg-secondary/10' : 'border-outline-variant/30 bg-surface-container-low'} rounded cursor-pointer transition-all hover:shadow-lg hover:scale-105 group ${isAssembled ? 'opacity-50' : ''}" onclick="addComponent('${comp.name}')" ${isAssembled ? 'disabled' : ''}>
+                    <div class="p-3 border ${isNext ? 'border-secondary bg-secondary/10' : 'border-outline-variant/30 bg-surface-container-low'} rounded cursor-pointer transition-all hover:shadow-lg hover:scale-105 group ${isAssembled ? 'opacity-50' : ''}" 
+                         draggable="true" 
+                         ondragstart="handleDragStart(event, '${comp.name}', '${comp.category}', ${comp.mass}, ${comp.cost})"
+                         onclick="addComponent('${comp.name}')" ${isAssembled ? 'disabled' : ''}>
                         <div class="flex justify-between items-start mb-2">
                             <span class="font-mono-data text-mono-data ${isNext ? 'text-secondary font-bold' : 'text-on-surface-variant'}">${comp.name}</span>
                             ${isNext ? '<span class="material-symbols-outlined text-xs text-secondary animate-pulse">arrow_forward</span>' : ''}
@@ -692,6 +1726,42 @@
                 hint.textContent = `Add ${nextComponent.name} to continue assembly`;
             } else {
                 hint.textContent = 'All components assembled! Ready for simulation.';
+            }
+        }
+
+        // Drag and Drop functionality for 3D Spacecraft Builder
+        function handleDragStart(event, name, category, mass, cost) {
+            event.dataTransfer.setData('componentName', name);
+            event.dataTransfer.setData('componentCategory', category);
+            event.dataTransfer.setData('componentMass', mass);
+            event.dataTransfer.setData('componentCost', cost);
+            event.dataTransfer.effectAllowed = 'copy';
+        }
+
+        function handleDragOver(event) {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = 'copy';
+        }
+
+        function handleDrop(event) {
+            event.preventDefault();
+            const name = event.dataTransfer.getData('componentName');
+            const category = event.dataTransfer.getData('componentCategory');
+            const mass = parseInt(event.dataTransfer.getData('componentMass'));
+            const cost = parseInt(event.dataTransfer.getData('componentCost'));
+            
+            if (name && category) {
+                addComponent(name);
+                showNotification(`Dragged ${name} to assembly`);
+            }
+        }
+
+        // Setup drop zone for 3D view
+        function setupDropZone() {
+            const threeContainer = document.getElementById('three-container');
+            if (threeContainer) {
+                threeContainer.addEventListener('dragover', handleDragOver);
+                threeContainer.addEventListener('drop', handleDrop);
             }
         }
 
